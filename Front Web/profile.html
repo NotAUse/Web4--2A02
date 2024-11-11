@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Profil - Tuniverse</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-pic-container">
+                <img id="profilePic" src="default-avatar.png" alt="Photo de Profil" class="profile-pic">
+                <label for="profilePicUpload" class="edit-pic-btn">✏️</label>
+                <input type="file" id="profilePicUpload" accept="image/*" style="display:none;">
+            </div>
+            <h1 id="profileName">Nom de l'Utilisateur</h1>
+            <p id="profileLocation">Ma Ville</p>
+        </div>
+        
+        <div class="profile-sections">
+            <!-- Section Centres d'Intérêt -->
+            <section class="my-interests">
+                <h2>Mes Centres d'Intérêt 
+                    <button id="addInterestBtn" class="add-interest-btn">+</button>
+                </h2>
+                <ul id="interestsList" class="interests-list">
+                    <!-- Les intérêts seront ajoutés dynamiquement ici -->
+                </ul>
+            </section>
+
+            <!-- Modal pour ajouter un centre d'intérêt -->
+            <div id="interestModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Ajouter un Centre d'Intérêt</h3>
+                    <select id="newInterestSelect">
+                        <option value="">Choisissez un intérêt</option>
+                        <option>Histoire</option>
+                        <option>Culture</option>
+                        <option>Artisanat</option>
+                        <option>Gastronomie</option>
+                        <option>Patrimoine</option>
+                        <option>Architecture</option>
+                        <option>Musique</option>
+                    </select>
+                    <button id="saveInterestBtn">Ajouter</button>
+                </div>
+            </div>
+
+            <!-- Section Mes Découvertes -->
+            <section class="my-discoveries">
+                <h2>Mes Découvertes 
+                    <button id="addDiscoveryBtn" class="add-btn">+</button>
+                </h2>
+                <div id="discoveriesList" class="discoveries-grid">
+                    <!-- Les découvertes seront ajoutées dynamiquement ici -->
+                </div>
+
+                <!-- Modal pour ajouter une découverte -->
+                <div id="discoveryModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-discovery">&times;</span>
+                        <h3>Ajouter une Découverte</h3>
+                        <form id="discoveryForm">
+                            <div class="form-group">
+                                <label>Nom du Lieu</label>
+                                <input type="text" id="discoveryName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="discoveryDescription"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Date de Visite</label>
+                                <input type="date" id="discoveryDate">
+                            </div>
+                            <div class="form-group">
+                                <label>Type de Lieu</label>
+                                <select id="discoveryType">
+                                    <option>Site Historique</option>
+                                    <option>Musée</option>
+                                    <option>Monument</option>
+                                    <option>Lieu Culturel</option>
+                                    <option>Autre</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ajouter une Photo</label>
+                                <input type="file" id="discoveryPhoto" accept="image/*">
+                            </div>
+                            <button type="submit">Enregistrer Découverte</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="profile-stats">
+                <div>
+                    <strong>Lieux Visités</strong>
+                    <span id="visitedPlacesCount">0</span>
+                </div>
+                <div>
+                    <strong>Points de Culture</strong>
+                    <span id="culturalPoints">0</span>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

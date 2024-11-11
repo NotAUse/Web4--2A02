@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuniverse - Célébration du Patrimoine Culturel Tunisien</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur Tuniverse</h1>
+        <nav>
+            <a href="#traditions">Traditions</a>
+            <a href="#recits">Récits</a>
+            <a href="#savoir-faire">Savoir-Faire</a>
+            <a href="#meilleures-places">Meilleures Places</a>
+            <a href="contact.php">Contact</a>
+            <li><a href="signup.html">S'inscrire</a></li>
+        </nav>
+    </header>
+
+    <main>
+        <section id="traditions">
+            <h2>Les Traditions</h2>
+            <p>Découvrez la richesse des traditions tunisiennes.</p>
+            <section id="traditions">
+    <h2>Les Traditions Tunisiennes</h2>
+    <p>Découvrez la richesse des traditions tunisiennes, un mélange fascinant de culture arabe, berbère et méditerranéenne.</p>
+
+    <!-- Cuisine Section -->
+    <h3>Cuisine Tunisienne</h3>
+    <p>La cuisine tunisienne est variée et savoureuse. Ne manquez pas des plats comme le couscous, les bricks, et le tajine tunisien. Cliquez sur le plat pour en savoir plus !</p>
+    
+    <div class="food-gallery">
+        <div class="food-item" onclick="openFoodModal('couscousModal')">
+            <img src="Couscous.jpg" alt="Couscous">
+            <h4>Couscous</h4>
+        </div>
+        <div class="food-item" onclick="openFoodModal('brikModal')">
+            <img src="brik1.jpeg" alt="Brik">
+            <h4>Brik</h4>
+        </div>
+    </div>
+
+    <!-- Festivals Section -->
+    <h3>Les Festivals Tunisiens</h3>
+    <p>Les festivals tunisiens, comme le Festival de Carthage, mettent en avant la musique, le cinéma et les arts traditionnels.</p>
+    
+    <div class="festival-gallery">
+        <div class="festival-item">
+            <img src="carthage1.jpg" alt="Festival de Carthage">
+            <h4>Festival de Carthage</h4>
+            <p>Un festival de musique et de cinéma qui attire des artistes internationaux et locaux.</p>
+        </div>
+        <div class="festival-item">
+            <img src="Djerba-Music-Land-696x385.jpg" alt="Festival de Djerba">
+            <h4>Festival de Djerba</h4>
+            <p>Un événement culturel majeur célébrant les arts et la musique traditionnelle.</p>
+        </div>
+    </div>
+
+    <!-- Music and Dance Section -->
+    <h3>Musique et Danse Traditionnelles</h3>
+    <p>La musique "Mezoued" et la danse "Raqs" sont des expressions culturelles vibrantes du patrimoine tunisien. Écoutez un extrait de musique Mezoued ci-dessous.</p>
+    
+    <audio controls>
+        <source src="Lila Welmezoued 5addem.mp3" type="audio/mp3">
+        Votre navigateur ne prend pas en charge la lecture de fichiers audio.
+    </audio>
+
+    <!-- Arts and Crafts Section -->
+    <h3>Arts et Artisanat</h3>
+    <p>Les tapis, la poterie, et l'art de la broderie témoignent du savoir-faire unique des artisans tunisiens.</p>
+
+    <div class="craft-gallery">
+        <div class="craft-item">
+            <img src="tapis.jpg" alt="Tunisian Carpet">
+            <h4>Tapis Traditionnels</h4>
+        </div>
+        <div class="craft-item">
+            <img src="poterie-071116-1.jpg" alt="Tunisian Ceramics">
+            <h4>Poterie Tunisienne</h4>
+        </div>
+    </div>
+</section>
+
+<!-- Modal for Food Details -->
+<div id="couscousModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeFoodModal('couscousModal')">&times;</span>
+        <h2>Recette du Couscous Tunisien</h2>
+        <p>Le couscous tunisien est préparé avec de la semoule fine et servi avec de la viande (agneau ou poulet), des légumes et des épices.</p>
+        <img src="Couscous.jpg" alt="Couscous">
+        <p><strong>Ingrédients:</strong> 62.5g de Semoule, viande,1/2 c.à.s de concentrée de tomates,0.5 pomme de terre,0.5 piment vert,poudre de piment rouge ,sel ou sel fin,0.5 oignon,0.5 carotte,1/2 verre d'huile d'olive ,Mélange d'épices (tunisien),poivre, pois chiches.</p>
+        <strong>préparation(5omin):</strong>
+        <ol>
+            <li>Émincer finement l'oignon.</li>
+            <li>Le faire revenir dans de l'huile d'olive dans le fond du couscoussier ou le fond d'une cocotte basique.</li>
+            <li>Une fois coloré, ajouter la viande coupée en morceaux.</li>
+            <li>Faire dorer</li>
+            <li>Ajouter deux grosses cuillères à soupe de concentré de tomate.</li>
+            <li>Faire dessécher légèrement le concentré.</li>
+            <li>Ajouter 4 verres d'eau.</li>
+            <li>Découper les carottes dans la longueur.</li>
+            <li>Découper les pommes de terre en 4.</li>
+            <li>Ajouter les carottes, les pommes de terre et les piments dans la cocotte ou le couscoussier.</li>
+            <li>Remuer le tout.</li>
+            <li>Recouvrir d'eau à hauteur.</li>
+            <li>Ajouter les épices puis Remuer bien à nouveau.</li>
+            <li>Saler et poivrer à convenance et baisser le feu à moyen.</li>
+            <li>Laisser cuire 1h jusqu'à ce que la viande se détache et que les légumes soient bien cuits.Pendant ce temps, mettre la semoule dans un grand plat.</li>
+            <li>La mouiller de 2 grands verres d'huile d'olive.L'égrener à la fourchette ou à la main jusqu'à ce qu'elle soit bien séparée. Mettre la semoule dans le haut du couscoussier.</li>
+            <li>Faire cuire 30 min en remuant de temps à autre puis Sortir la semouleet la mouiller avec de l'eau.</li>
+            <li>Bien mélanger pour que les grains ne collent pas.Remettre sur le couscoussier.En fin de cuisson de la semoule, ajouter environ 2 louches de la sauce du couscous (sans légumes)</li>
+            <li>Dresser la semoule en rond en laissant un puit au milieu.Y dresser la sauce.</li>
+            <li>Disposer les carottes en 'soleil' avec les pommes de terre.</li>
+        
+        </ol>
+
+    </div>
+</div>
+
+<!-- Modal for Brik Details -->
+<div id="brikModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeFoodModal('brikModal')">&times;</span>
+        <h2>Recette du Brik Tunisien</h2>
+        <p>Le Brik est un plat composé de pâte fine farcie souvent avec un œuf, puis frit. C'est un incontournable lors des repas.</p>
+        <img src="brik1.jpeg" alt="Brik">
+        <p><strong>Ingrédients:</strong> Pâte filo, œuf, thon, câpres.</p>
+    </div>
+</div>
+
+        </section>
+
+        <section id="recits">
+            <h2>Récits Culturels</h2>
+            <p>Explorez les récits qui forment notre identité collective.</p>
+        </section>
+
+        <section id="savoir-faire">
+            <h2>Savoir-Faire</h2>
+            <p>Connectez-vous avec les savoir-faire tunisiens.</p>
+        </section>
+
+        <section id="meilleures-places">
+            <h2>Les Meilleures Places à Visiter en Tunisie</h2>
+            <!-- Barre de recherche -->
+            <input type="text" id="searchInput" onkeyup="filterPlaces()" placeholder="Rechercher un lieu..." />
+
+            <div class="places-container" id="placesContainer">
+                <div class="place" onclick="openModal('douggaModal')">
+                    <h3>1. Dougga</h3>
+                    <img src="https://cdn.generationvoyage.fr/2019/06/dougga-tunisie.jpg" alt="Dougga" />
+                    <p>Site archéologique classé au patrimoine mondial de l'UNESCO, Dougga est un incontournable pour les amateurs d'histoire.</p>
+                </div>
+                <div class="place" onclick="openModal('djerbaModal')">
+                    <h3>2. Djerba</h3>
+                    <img src="https://cdn.generationvoyage.fr/2019/06/djerba-tunisie.jpg" alt="Djerba" />
+                    <p>Connue pour ses plages de sable blanc et ses maisons typiques, Djerba est une destination de rêve.</p>
+                </div>
+                <div class="place" onclick="openModal('carthageModal')">
+                    <h3>3. Carthage</h3>
+                    <img src="https://cdn.generationvoyage.fr/2019/06/carthage-tunisie.jpg" alt="Carthage" />
+                    <p>Ancienne cité commerciale, Carthage est riche en histoire et en monuments à découvrir.</p>
+                </div>
+                <div class="place" onclick="openModal('sidiModal')">
+                    <h3>4. Sidi Bou Saïd</h3>
+                    <img src="1200px-Sidi_Chebaan.jpg" alt="Sidi Bou Saïd" />
+                    <p>Ce charmant village est célèbre pour ses maisons blanches et bleues et ses vues imprenables sur la mer.</p>
+                </div>
+                <div class="place" onclick="openModal('kairouanModal')">
+                    <h3>5. Kairouan</h3>
+                    <img src="10642855.jpg" alt="Kairouan" />
+                    <p>Kairouan est une ville sainte de l'Islam, connue pour sa grande mosquée et son riche patrimoine culturel.</p>
+                </div>
+                <div class="place" onclick="openModal ('bizerteModal')">
+                    <h3>6. Bizerte</h3>
+                    <img src="Ksiba,_Bizerte_1.jpg" alt="Bizerte" />
+                    <p>Cette ville côtière est célèbre pour son port et ses monuments historiques.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="douggaModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('douggaModal')">&times;</span>
+            <h2>Dougga</h2>
+            <p>Site archéologique classé au patrimoine mondial de l'UNESCO, Dougga est un incontournable pour les amateurs d'histoire.</p>
+            <img src="https://cdn.generationvoyage.fr/2019/06/dougga-tunisie.jpg" alt="Dougga" />
+            <img src="https://static1.evcdn.net/images/reduction/229177_w-1600_h-1200_q-70_m-crop.jpg" alt="Dougga" />
+        </div>
+    </div>
+
+    <div id="djerbaModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('djerbaModal')">&times;</span>
+            <h2>Djerba</h2>
+            <p>Connue pour ses plages de sable blanc et ses maisons typiques, Djerba est une destination de rêve.</p>
+            <img src="https://cdn.generationvoyage.fr/2019/06/djerba-tunisie.jpg" alt="Djerba" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZGttdFKxSdm0IsLwdMTd9v4IBM6llgJt0wg&s" alt="Djerba" />
+        </div>
+    </div>
+
+    <div id="carthageModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('carthageModal')">&times;</span>
+            <h2>Carthage</h2>
+            <p>Ancienne cité commerciale, Carthage est riche en histoire et en monuments à découvrir.</p>
+            <img src="https://cdn.generationvoyage.fr/2019/06/carthage-tunisie.jpg" alt="Carthage" />
+            <img src="carthage1.jpg" alt="Carthage" />
+        </div>
+    </div>
+
+    <div id="sidiModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('sidiModal')">&times;</span>
+            <h2>Sidi Bou Saïd</h2>
+            <p>Ce charmant village est célèbre pour ses maisons blanches et bleues et ses vues imprenables sur la mer.</p>
+            <img src="1200px-Sidi_Chebaan.jpg" alt="Sidi Bou Saïd" />
+            <img src="rue_sidi_bou_said.jpg" alt="Sidi Bou Saïd" />
+        </div>
+    </div>
+
+    <div id="kairouanModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('kairouanModal')">&times;</span>
+            <h2>Kairouan</h2>
+            <p>Kairouan est une ville sainte de l'Islam, connue pour sa grande mosquée et son riche patrimoine culturel.</p>
+            <img src="10642855.jpg" alt="Kairouan" />
+            <img src="Kairouan.jpg" alt="Kairouan" />
+        </div>
+    </div>
+
+    <div id="bizerteModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('bizerteModal')">&times;</span>
+            <h2>Bizerte</h2>
+            <p>Cette ville côtière est célèbre pour son port et ses monuments historiques.</p>
+            <img src="Ksiba,_Bizerte_1.jpg" alt="Bizerte" />
+            <img src="portbizerte-191020-7.jpg" alt="Bizerte" />
+        </div>
+    </div>
+    
+    <button onclick="scrollToTop()" id="backToTop" title="Back to Top">↑</button>
+    <script src="script.js"></script>
+</body>
+</html>
