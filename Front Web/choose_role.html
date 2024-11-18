@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choisissez votre rôle</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .role-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 100px;
+        }
+        .role-button {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px 30px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .role-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Choisissez votre rôle</h1>
+    </header>
+    <main>
+        <div class="role-container">
+            <a href="admin_dashboard.php" class="role-button">Admin</a>
+            <a href="signup.html" class="role-button">Utilisateur</a>
+        </div>
+    </main>
+</body>
+</html>
