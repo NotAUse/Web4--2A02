@@ -523,7 +523,7 @@
                         echo '<th>Nom</th>';
                         echo '<th>Unite</th>';
                         echo '<th>Category</th>';
-                        echo '<th>Actions</th>';//modifier ou supprimer 
+                        echo '<th>Actions</th>';
                         echo '</tr>';
                         echo '</thead>';
                         echo '<tbody>';
@@ -542,7 +542,7 @@
                             echo '<td>' . htmlspecialchars($categorie) . '</td>';
                             echo '<td>
                                     <a href="update_ingredient.php?id_ingredient=' . $id_ingredient . '" class="btn btn-info btn-sm">Edit</a>
-                                    <form action="../../Model/delete_ingredient.php" method="POST" style="display:inline;">
+                                    <form action="../../Controller/delete_ingredient.php" method="POST" style="display:inline;">
                                         <input type="hidden" name="id_ingredient" value="' . $id_ingredient . '">
                                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this ingredient?\')">Delete</button>
                                     </form>
