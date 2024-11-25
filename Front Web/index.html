@@ -6,6 +6,10 @@
     <title>Tuniverse - Célébration du Patrimoine Culturel Tunisien</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    
 </head>
 <body>
     <header>
@@ -16,7 +20,13 @@
             <a href="#savoir-faire">Savoir-Faire</a>
             <a href="#meilleures-places">Meilleures Places</a>
             <a href="contact.php">Contact</a>
-            <li><a href="signup.html">S'inscrire</a></li>
+            <li><a href="choose_role.html">S'inscrire</a></li>
+            <a href="profile.html" class="my-account-link">
+                <i class="fas fa-user-circle user-icon"></i>
+                Mon Compte
+            </a>
+            
+
         </nav>
     </header>
 
@@ -34,11 +44,11 @@
     
     <div class="food-gallery">
         <div class="food-item" onclick="openFoodModal('couscousModal')">
-            <img src="Couscous.jpg" alt="Couscous">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Tunisian_Couscous_%28Couscous_Tunisien%29.jpg" alt="Couscous">
             <h4>Couscous</h4>
         </div>
         <div class="food-item" onclick="openFoodModal('brikModal')">
-            <img src="brik1.jpeg" alt="Brik">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Brik_tunisien.jpg" alt="Brik">
             <h4>Brik</h4>
         </div>
     </div>
@@ -49,12 +59,12 @@
     
     <div class="festival-gallery">
         <div class="festival-item">
-            <img src="carthage1.jpg" alt="Festival de Carthage">
+            <img src="https://www.exploringtunisia.com/wp-content/uploads/2021/06/festival-de-carthage.jpg" alt="Festival de Carthage">
             <h4>Festival de Carthage</h4>
             <p>Un festival de musique et de cinéma qui attire des artistes internationaux et locaux.</p>
         </div>
         <div class="festival-item">
-            <img src="Djerba-Music-Land-696x385.jpg" alt="Festival de Djerba">
+            <img src="https://www.madeintunisia.net/sites/default/files/styles/16_9_960x540/public/2021-11/festival-djerba.jpg" alt="Festival de Djerba">
             <h4>Festival de Djerba</h4>
             <p>Un événement culturel majeur célébrant les arts et la musique traditionnelle.</p>
         </div>
@@ -65,7 +75,7 @@
     <p>La musique "Mezoued" et la danse "Raqs" sont des expressions culturelles vibrantes du patrimoine tunisien. Écoutez un extrait de musique Mezoued ci-dessous.</p>
     
     <audio controls>
-        <source src="Lila Welmezoued 5addem.mp3" type="audio/mp3">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
         Votre navigateur ne prend pas en charge la lecture de fichiers audio.
     </audio>
 
@@ -75,11 +85,11 @@
 
     <div class="craft-gallery">
         <div class="craft-item">
-            <img src="tapis.jpg" alt="Tunisian Carpet">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Tunisian_handmade_carpet.jpg" alt="Tunisian Carpet">
             <h4>Tapis Traditionnels</h4>
         </div>
         <div class="craft-item">
-            <img src="poterie-071116-1.jpg" alt="Tunisian Ceramics">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Tunisian_Ceramics.jpg" alt="Tunisian Ceramics">
             <h4>Poterie Tunisienne</h4>
         </div>
     </div>
@@ -91,33 +101,8 @@
         <span class="close" onclick="closeFoodModal('couscousModal')">&times;</span>
         <h2>Recette du Couscous Tunisien</h2>
         <p>Le couscous tunisien est préparé avec de la semoule fine et servi avec de la viande (agneau ou poulet), des légumes et des épices.</p>
-        <img src="Couscous.jpg" alt="Couscous">
-        <p><strong>Ingrédients:</strong> 62.5g de Semoule, viande,1/2 c.à.s de concentrée de tomates,0.5 pomme de terre,0.5 piment vert,poudre de piment rouge ,sel ou sel fin,0.5 oignon,0.5 carotte,1/2 verre d'huile d'olive ,Mélange d'épices (tunisien),poivre, pois chiches.</p>
-        <strong>préparation(5omin):</strong>
-        <ol>
-            <li>Émincer finement l'oignon.</li>
-            <li>Le faire revenir dans de l'huile d'olive dans le fond du couscoussier ou le fond d'une cocotte basique.</li>
-            <li>Une fois coloré, ajouter la viande coupée en morceaux.</li>
-            <li>Faire dorer</li>
-            <li>Ajouter deux grosses cuillères à soupe de concentré de tomate.</li>
-            <li>Faire dessécher légèrement le concentré.</li>
-            <li>Ajouter 4 verres d'eau.</li>
-            <li>Découper les carottes dans la longueur.</li>
-            <li>Découper les pommes de terre en 4.</li>
-            <li>Ajouter les carottes, les pommes de terre et les piments dans la cocotte ou le couscoussier.</li>
-            <li>Remuer le tout.</li>
-            <li>Recouvrir d'eau à hauteur.</li>
-            <li>Ajouter les épices puis Remuer bien à nouveau.</li>
-            <li>Saler et poivrer à convenance et baisser le feu à moyen.</li>
-            <li>Laisser cuire 1h jusqu'à ce que la viande se détache et que les légumes soient bien cuits.Pendant ce temps, mettre la semoule dans un grand plat.</li>
-            <li>La mouiller de 2 grands verres d'huile d'olive.L'égrener à la fourchette ou à la main jusqu'à ce qu'elle soit bien séparée. Mettre la semoule dans le haut du couscoussier.</li>
-            <li>Faire cuire 30 min en remuant de temps à autre puis Sortir la semouleet la mouiller avec de l'eau.</li>
-            <li>Bien mélanger pour que les grains ne collent pas.Remettre sur le couscoussier.En fin de cuisson de la semoule, ajouter environ 2 louches de la sauce du couscous (sans légumes)</li>
-            <li>Dresser la semoule en rond en laissant un puit au milieu.Y dresser la sauce.</li>
-            <li>Disposer les carottes en 'soleil' avec les pommes de terre.</li>
-        
-        </ol>
-
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Tunisian_Couscous_%28Couscous_Tunisien%29.jpg" alt="Couscous">
+        <p><strong>Ingrédients:</strong> Semoule, viande, légumes, épices (ras el hanout), pois chiches.</p>
     </div>
 </div>
 
@@ -127,7 +112,7 @@
         <span class="close" onclick="closeFoodModal('brikModal')">&times;</span>
         <h2>Recette du Brik Tunisien</h2>
         <p>Le Brik est un plat composé de pâte fine farcie souvent avec un œuf, puis frit. C'est un incontournable lors des repas.</p>
-        <img src="brik1.jpeg" alt="Brik">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Brik_tunisien.jpg" alt="Brik">
         <p><strong>Ingrédients:</strong> Pâte filo, œuf, thon, câpres.</p>
     </div>
 </div>
@@ -167,17 +152,17 @@
                 </div>
                 <div class="place" onclick="openModal('sidiModal')">
                     <h3>4. Sidi Bou Saïd</h3>
-                    <img src="1200px-Sidi_Chebaan.jpg" alt="Sidi Bou Saïd" />
+                    <img src="https://cdn.generationvoyage.fr/2019/06/sidi-bou-said.jpg" alt="Sidi Bou Saïd" />
                     <p>Ce charmant village est célèbre pour ses maisons blanches et bleues et ses vues imprenables sur la mer.</p>
                 </div>
                 <div class="place" onclick="openModal('kairouanModal')">
                     <h3>5. Kairouan</h3>
-                    <img src="10642855.jpg" alt="Kairouan" />
+                    <img src="https://cdn.generationvoyage.fr/2019/06/kairouan.jpg" alt="Kairouan" />
                     <p>Kairouan est une ville sainte de l'Islam, connue pour sa grande mosquée et son riche patrimoine culturel.</p>
                 </div>
                 <div class="place" onclick="openModal ('bizerteModal')">
                     <h3>6. Bizerte</h3>
-                    <img src="Ksiba,_Bizerte_1.jpg" alt="Bizerte" />
+                    <img src="https://cdn.generationvoyage.fr/2019/06/bizerte.jpg" alt="Bizerte" />
                     <p>Cette ville côtière est célèbre pour son port et ses monuments historiques.</p>
                 </div>
             </div>
@@ -211,7 +196,7 @@
             <h2>Carthage</h2>
             <p>Ancienne cité commerciale, Carthage est riche en histoire et en monuments à découvrir.</p>
             <img src="https://cdn.generationvoyage.fr/2019/06/carthage-tunisie.jpg" alt="Carthage" />
-            <img src="carthage1.jpg" alt="Carthage" />
+            <img src="https://cdn.generationvoyage.fr/2019/06/carthage-tunisie-2.jpg" alt="Carthage" />
         </div>
     </div>
 
@@ -220,8 +205,8 @@
             <span class="close" onclick="closeModal('sidiModal')">&times;</span>
             <h2>Sidi Bou Saïd</h2>
             <p>Ce charmant village est célèbre pour ses maisons blanches et bleues et ses vues imprenables sur la mer.</p>
-            <img src="1200px-Sidi_Chebaan.jpg" alt="Sidi Bou Saïd" />
-            <img src="rue_sidi_bou_said.jpg" alt="Sidi Bou Saïd" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIwavvwJsQK1fKzAHTP4kqPiGK1x9q9wJnug&sg" alt="Sidi Bou Saïd" />
+            <img src="https://cdn.generationvoyage.fr/2019/06/sidi-bou-said-2.jpg" alt="Sidi Bou Saïd" />
         </div>
     </div>
 
@@ -230,8 +215,8 @@
             <span class="close" onclick="closeModal('kairouanModal')">&times;</span>
             <h2>Kairouan</h2>
             <p>Kairouan est une ville sainte de l'Islam, connue pour sa grande mosquée et son riche patrimoine culturel.</p>
-            <img src="10642855.jpg" alt="Kairouan" />
-            <img src="Kairouan.jpg" alt="Kairouan" />
+            <img src="https://cdn.generationvoyage.fr/2019/06/kairouan.jpg" alt="Kairouan" />
+            <img src="https://cdn.generationvoyage.fr/2019/06/kairouan-2.jpg" alt="Kairouan" />
         </div>
     </div>
 
@@ -240,12 +225,13 @@
             <span class="close" onclick="closeModal('bizerteModal')">&times;</span>
             <h2>Bizerte</h2>
             <p>Cette ville côtière est célèbre pour son port et ses monuments historiques.</p>
-            <img src="Ksiba,_Bizerte_1.jpg" alt="Bizerte" />
-            <img src="portbizerte-191020-7.jpg" alt="Bizerte" />
+            <img src="https://cdn.generationvoyage.fr /2019/06/bizerte.jpg" alt="Bizerte" />
+            <img src="https://cdn.generationvoyage.fr/2019/06/bizerte-2.jpg" alt="Bizerte" />
         </div>
     </div>
     
     <button onclick="scrollToTop()" id="backToTop" title="Back to Top">↑</button>
     <script src="script.js"></script>
+    
 </body>
 </html>

@@ -346,4 +346,5 @@ document.addEventListener('DOMContentLoaded', function() {
             interestModal.style.display = 'none';
         }
     });
+    
 });

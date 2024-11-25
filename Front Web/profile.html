@@ -105,8 +105,16 @@
                 </div>
             </section>
         </div>
+        <div class="save-button-container">
+            <button id="saveProfileBtn" class="save-button">Enregistrer</button>
+        </div>
     </div>
-
+    <script>
+        // Redirect when the save button is clicked
+        document.getElementById('saveProfileBtn').addEventListener('click', function() {
+            window.location.href = "index.html";
+        });
+    </script>
     <script src="profile.js"></script>
 </body>
 </html>
