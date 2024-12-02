@@ -2,35 +2,86 @@
 session_start();
 require_once '../controllers/UserController.php';
 
-$userController = new UserController();
-$id = $_GET['id'] ?? null;
-$user = $id ? $userController->getUser($id) : null;
+// Check if the user is logged in as an admin
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
+    header('Location: login.html');
+    exit();
+}
+
+// Handle form submission to add a new user
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
+    $role = $_POST['role'];
+
+    $userController = new User();
+    $userController->addUser($username, $email, $password, $role); // Add user to the database
+
+    // Redirect back to the dashboard
+    header('Location: admin_dashboard.php');
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $id ? 'Edit' : 'Add'; ?> User</title>
+    <title>Add New User</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .form-container {
+            padding: 20px;
+            width: 400px;
+            margin: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container input,
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h1><?php echo $id ? 'Edit' : 'Add'; ?> User</h1>
-    <form action="../public/index.php?action=<?php echo $id ? 'update' : 'create'; ?>" method="POST">
-        <?php if ($id): ?>
-            <input type="hidden" name="id" value="<?php echo $id; ?>">
-        <?php endif; ?>
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" value="<?php echo $user['username'] ?? ''; ?>" required><br>
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="<?php echo $user['email'] ?? ''; ?>" required><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br>
-        <label for="role">Role:</label>
-        <select name="role" id="role" required>
-            <option value="user" <?php echo ($user['role'] ?? '') === 'user' ? 'selected' : ''; ?>>User</option>
-            <option value="admin" <?php echo ($user['role'] ?? '') === 'admin' ? 'selected' : ''; ?>>Admin</option>
-        </select><br>
-        <button type="submit"><?php echo $id ? 'Update' : 'Add'; ?> User</button>
-    </form>
+    <div class="form-container">
+        <h2>Add New User</h2>
+        <form method="POST" action="user_form.php">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
+
+            <button type="submit">Add User</button>
+        </form>
+    </div>
 </body>
 </html>

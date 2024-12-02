@@ -108,12 +108,24 @@
         <div class="save-button-container">
             <button id="saveProfileBtn" class="save-button">Enregistrer</button>
         </div>
+        <div class="password-reset">
+            <a href="forgot_password.html" class="forgot-password-link">Mot de passe oublié ?</a>
+        </div>
     </div>
     <script>
         // Redirect when the save button is clicked
         document.getElementById('saveProfileBtn').addEventListener('click', function() {
             window.location.href = "index.html";
         });
+    </script>
+    <script>
+        // Save profile name to localStorage
+document.getElementById('saveProfileBtn').addEventListener('click', function () {
+    const userName = document.getElementById('profileName').textContent;
+    localStorage.setItem('userName', userName);
+    window.location.href = "index.html";
+});
+
     </script>
     <script src="profile.js"></script>
 </body>

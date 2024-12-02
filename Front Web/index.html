@@ -21,10 +21,23 @@
             <a href="#meilleures-places">Meilleures Places</a>
             <a href="contact.php">Contact</a>
             <li><a href="choose_role.html">S'inscrire</a></li>
+            <li><a href="login.php">login</a></li>
             <a href="profile.html" class="my-account-link">
                 <i class="fas fa-user-circle user-icon"></i>
                 Mon Compte
             </a>
+            <script>
+                // Display user's name from localStorage
+document.addEventListener('DOMContentLoaded', function () {
+    const userName = localStorage.getItem('username');
+    if (userName) {
+        const welcomeMessage = document.createElement('p');
+        welcomeMessage.textContent = `Bienvenue, ${userName}!`;
+        document.querySelector('header').appendChild(welcomeMessage);
+    }
+});
+
+            </script>
             
 
         </nav>

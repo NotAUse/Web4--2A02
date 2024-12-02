@@ -1,6 +1,11 @@
 <?php
 session_start();
+
+// Destroy the session
+session_unset();
 session_destroy();
-header("Location: index.php"); // Redirect to homepage
+
+// Redirect to login page
+header("Location: index.html");
 exit();
 ?>

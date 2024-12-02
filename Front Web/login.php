@@ -1,64 +1,79 @@
 <?php
-session_start();
-require_once '../config/db.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+$is_invalid = false;
 
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
-        // Database connection
-        $database = new Database();
-        $db = $database->getConnection();
+        // Include the database connection
+        $pdo = require __DIR__ . "/database.php";
 
-        // Query to fetch the user by username
-        $query = "SELECT * FROM users WHERE username = :username";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':username', $username);
+        // Prepare the SQL statement with a placeholder
+        $sql = "SELECT * FROM user WHERE email = :email";
+
+        // Prepare the statement
+        $stmt = $pdo->prepare($sql);
+
+        // Bind the email parameter to prevent SQL injection
+        $stmt->bindParam(':email', $_POST["email"]);
+
+        // Execute the statement
         $stmt->execute();
 
+        // Fetch the user record
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && $user['password'] === $password) {
-            // Set session variables
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role'];
+        if ($user) {
+            // Verify the password
+            if (password_verify($_POST["password"], $user["password_hash"])) {
+                session_start();
 
-            // Redirect based on role
-            if ($user['role'] === 'admin') {
-                header("Location: admin_dashboard.php");
-                exit();
-            } else {
-                header("Location: index.php");
-                exit();
+                // Regenerate session ID for security
+                session_regenerate_id();
+
+                // Store user ID in the session
+                $_SESSION["user_id"] = $user["id"];
+
+                // Redirect to the homepage
+                header("Location: profile.html");
+                exit;
             }
-        } else {
-            $error = "Invalid username or password!";
         }
+
+        // If no user is found or the password is incorrect
+        $is_invalid = true;
     } catch (PDOException $e) {
-        $error = "Error: " . $e->getMessage();
+        // Handle database errors
+        die("Database error: " . $e->getMessage());
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Login</title>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form action="login.php" method="POST">
-        <h2>Login</h2>
-        <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+    <h1>Login</h1>
 
-        <button type="submit">Login</button>
+    <?php if ($is_invalid): ?>
+        <em>Invalid login</em>
+    <?php endif; ?>
+
+    <form method="post">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email"
+               value="<?= htmlspecialchars($_POST["email"] ?? "") ?>">
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+
+        <button>Log in</button>
     </form>
+    <a href="forgot_password.php">Forgot password ?</a>
+
 </body>
 </html>
