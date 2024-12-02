@@ -4,7 +4,21 @@ include '../../controller/ExperienceController.php';
 $siteC = new siteController();
 $expC = new ExperienceController();
 $list = $siteC->listsite();
-$lists=$expC->listexperience();
+$sitesJson = json_encode($list);
+
+if (isset($_GET['nom'])) {
+    $nom = $_GET['nom'] ?? null;
+    $list = $siteC->searchSites(null,$nom,null,null);
+  } else {
+    $list = $siteC->listsite();
+  }
+
+$sitesParPage = 5;
+$pageActuelle = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$startIndex = ($pageActuelle - 1) * $sitesParPage;
+$totalSites = count($list);
+$totalPages = ceil($totalSites / $sitesParPage);
+$sitesAffiches = array_slice($list, $startIndex, $sitesParPage);
 
 ?>
 
@@ -14,10 +28,37 @@ $lists=$expC->listexperience();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tuniverse - Célébration du Patrimoine Culturel Tunisien</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../frontoffice/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
     <script src="../front web/js/profile.js"></script>
     <script src="../front web/js/script.js"></script>
+    <title>Carte Mapbox - Tunisie</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { height: 100vh; }
+    </style>
+    <!-- Fonts and icons -->
+    <script src="../backoffice/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["../backoffice/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
     
         
 </head>
@@ -136,12 +177,26 @@ $lists=$expC->listexperience();
         <section id="meilleures-places">
             <h2>Les Meilleures Places à Visiter en Tunisie</h2>
             <!-- Barre de recherche -->
-            <input type="text" id="searchInput" onkeyup="filterPlaces()" placeholder="Rechercher un lieu..." />
+            <div class="search-bar" id="searchInput" style="display: flex; align-items: center;">
+                <form method="GET" action="" style="display: flex; align-items: center; gap: 8px;">
+                    <input 
+                        type="text" 
+                        name="nom" 
+                        placeholder="Rechercher un Nom" 
+                        value="<?= isset($_GET['nom']) ? htmlspecialchars($_GET['nom']) : '' ?>" 
+                        style="width: 200px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary" 
+                        style="padding: 5px 10px; font-size: 12px; width: auto; flex-shrink: 0;">
+                        Rechercher
+                    </button>
+                </form>
+            </div>
+
             <div class="places-container" id="placesContainer">
                 <?php 
-                foreach ($list as $site) { 
-                    // Fetch experiences for the current site
-                    $experiences = $expC->showExperienceBySite($site['id_site']);
+                foreach ($sitesAffiches as $site) { 
                 ?>
                     <div class="place">
                         <h3>Nom du site: </h3>
@@ -158,26 +213,85 @@ $lists=$expC->listexperience();
                         
                         <h3>Description du site culturel:</h3>
                         <p><?php echo $site['descriptions']; ?></p>
-                        
-                        <!-- Display experiences for this site -->
-                        <div class="experiences">
-                            <h4>Expériences liées au site:</h4>
-                            <?php if (!empty($experiences)) { ?>
-                                <?php foreach ($experiences as $experience) { ?>
-                                     <strong>Titre:</strong> <?php echo $experience['titre']; ?><br>
-                                     <strong>Description:</strong> <?php echo $experience['descriptionE']; ?><br>
-                                     <strong>Date:</strong> <?php echo $experience['dateE']; ?>
-                                <?php } ?>
-                            <?php } else { ?>
-                                <p>Aucune expérience n'est associée à ce site pour le moment.</p>
-                            <?php } ?>
-                        </div>
+
+                        <form method="POST" action="addexperience.php">
+                            <input type="hidden" value="<?php echo $site['id_site']; ?>" name="id_site">
+                            <input type="hidden" value="<?php echo $site['nom']; ?>" name="nom_site">
+                            <button type="submit" name="addexperience" class="btn btn-primary">ajouter votre experience
+                            </button>
+                        </form>
                     </div>
                 <?php } ?>
             </div>
+
+            <div class="pagination">
+                <?php if ($pageActuelle > 1): ?>
+                    <a href="?page=<?php echo $pageActuelle - 1; ?>">Précédent</a>
+                <?php endif; ?>
+
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <a href="?page=<?php echo $i; ?>" 
+                    class="<?php echo ($i === $pageActuelle) ? 'active' : ''; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                <?php endfor; ?>
+
+                <?php if ($pageActuelle < $totalPages): ?>
+                    <a href="?page=<?php echo $pageActuelle + 1; ?>">Suivant</a>
+                <?php endif; ?>
+            </div>
+            
+            <h2>Map contenant les sites culturels</h2>
+            <div id="map"></div>
+                 <script>
+                     mapboxgl.accessToken = 'pk.eyJ1IjoiYXlvdWJqZW1hbGkiLCJhIjoiY20zd3M0c3o3MTRiejJpcjB6NHlvdTF5NyJ9.yALYB_t3BCXigiJ4nsMYRA';
+                     var map = new mapboxgl.Map({
+                         container: 'map',
+                         style: 'mapbox://styles/mapbox/streets-v11',
+                         center: [9.0, 33.8869], 
+                         zoom: 6 
+                     });
+
+                     var sites = <?php echo $sitesJson; ?>;
+
+                   sites.forEach(function(site) {
+                       new mapboxgl.Marker()
+                           .setLngLat([site.longitude, site.latitude]) 
+                           .setPopup(new mapboxgl.Popup().setHTML('<h3>' + site.nom + '</h3><p>' + site.descriptions + '</p>'))
+                           .addTo(map);
+                   });
+                 </script>
         </section>
+        
     </main>
-    
+    <style>
+    .pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        padding: 8px 16px;
+        text-decoration: none;
+        background-color: #e0f7e0;  
+        color: #2c6b2f;  
+        border: 1px solid #b3e0b3;  
+        border-radius: 5px;
+    }
+
+    .pagination a.active {
+        background-color: #28a745;  
+        color: #fff;  
+        border: 1px solid #218838;  
+    }
+
+    .pagination a:hover {
+        background-color: #a1e6a1;  
+    }
+
+    </style>
     <button onclick="scrollToTop()" id="backToTop" title="Back to Top">↑</button>
     <script src="script.js"></script>
 </body>

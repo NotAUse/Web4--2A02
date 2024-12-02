@@ -6,21 +6,42 @@ $site= null;
 $siteController = new siteController();
 $imagePath = null;
 
-if (isset($_POST["nom"]) && $_POST["localisation"] && $_POST["descriptions"] && $_POST["latitude"] && $_POST["longitude"]) {
-  if (!empty($_POST["nom"]) && !empty($_POST["localisation"]) && !empty($_POST["descriptions"]) && !empty($_POST["latitude"]) && !empty($_POST["longitude"])) {
-      // Vérifier si une image a été téléchargée
+define('MAPBOX_API_KEY','pk.eyJ1IjoiYXlvdWJqZW1hbGkiLCJhIjoiY20zd3M0c3o3MTRiejJpcjB6NHlvdTF5NyJ9.yALYB_t3BCXigiJ4nsMYRA');
+
+function getCoordinates($localisation) {
+  $url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" . urlencode($localisation) . ".json?access_token=" . MAPBOX_API_KEY . "&limit=1";
+  $response = file_get_contents($url);
+  if ($response === FALSE) {
+      return ["latitude" => null, "longitude" => null];
+  }
+  $data = json_decode($response, true);
+  if (!empty($data['features'])) {
+      $coordinates = $data['features'][0]['geometry']['coordinates'];
+      return ["latitude" => $coordinates[1], "longitude" => $coordinates[0]];
+  }
+  return ["latitude" => null, "longitude" => null];
+}
+
+if (isset($_POST["nom"]) && $_POST["localisation"] && $_POST["descriptions"]) {
+  if (!empty($_POST["nom"]) && !empty($_POST["localisation"]) && !empty($_POST["descriptions"])) {
+    if (empty($_POST["latitude"]) || empty($_POST["longitude"])) {
+      $coords = getCoordinates($_POST["localisation"]);
+      $_POST["latitude"] = $coords["latitude"];
+      $_POST["longitude"] = $coords["longitude"];
+    }
+
       if (isset($_FILES['images']) && $_FILES['images']['error'] == 0) {
           $imageName = $_FILES['images']['name'];
           $imageTmpName = $_FILES['images']['tmp_name'];
-          $imagePath = '../../uploads/' . basename($imageName);  // Le chemin où l'image sera stockée
-          // Déplacer l'image dans le dossier "uploads"
+          $imagePath = '../../uploads/' . basename($imageName);
+
           if (move_uploaded_file($imageTmpName, $imagePath)) {
-              // Image téléchargée avec succès
+
           } else {
               $error = "Failed to upload image.";
           }
       }
-      // Créer l'objet Site et ajouter dans la base de données
+
       $site = new site(
           null,
           $_POST['nom'],
@@ -28,11 +49,10 @@ if (isset($_POST["nom"]) && $_POST["localisation"] && $_POST["descriptions"] && 
           $_POST['descriptions'],
           $_POST['latitude'],
           $_POST['longitude'],
-          $imagePath // Passer le chemin de l'image
+          $imagePath
       );
       $siteController->addsite($site);
-      header('Location: siteList.php'); // Rediriger vers la liste des sites après ajout
-      // Important de quitter le script après redirection
+      header('Location: siteList.php'); 
 
   } else {
       $error = "Missing information";
@@ -42,6 +62,7 @@ if (isset($_POST["nom"]) && $_POST["localisation"] && $_POST["descriptions"] && 
 
 <!DOCTYPE html>
 <html lang="en">
+  
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Admin Dashboard</title>
@@ -132,11 +153,6 @@ if (isset($_POST["nom"]) && $_POST["localisation"] && $_POST["descriptions"] && 
                     <li class="active">
                       <a href="../backoffice/addsite.php">
                         <span class="sub-item">Ajouter un site culturel</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../backoffice/addexperience.php">
-                        <span class="sub-item">Ajouter une experience culturel</span>
                       </a>
                     </li>
                     <li>
@@ -564,22 +580,12 @@ if (isset($_POST["nom"]) && $_POST["localisation"] && $_POST["descriptions"] && 
                           <span id="nom_error"></span><br>
                         
                           <label for="localisation">localisation:</label><br>
-                          <input class="form-control form-control-user" type="text" id="localisation" name="localisation" >
+                          <input class="form-control form-control-user" type="text" id="localisation" name="localisation">
                           <span id="localisation_error"></span><br>
                         
                           <label for="descriptions">descriptions:</label><br>
                           <textarea class="form-control" id="descriptions" rows="5" name="descriptions">
                           </textarea>
-
-                          <label for="latitude">latitude:</label><br>
-                          <input class="form-control form-control-user" type="text" id="latitude" name="latitude" >
-                          <span id="latitude_error"></span><br>
-                          
-
-                          <label for="longitude">longitude:</label><br>
-                          <input class="form-control form-control-user" type="text" id="longitude" name="longitude" >
-                          <span id="longitude_error"></span><br>
-                          
 
                           <label for="images">Image du site:</label><br>
                           <input type="file" class="form-control form-control-user" id="images" name="images" accept="images/*"><br><br>
@@ -593,7 +599,30 @@ if (isset($_POST["nom"]) && $_POST["localisation"] && $_POST["descriptions"] && 
             </div>
           </div>
         </div>
+        <script>
+    const mapboxApiKey = "pk.eyJ1IjoiYXlvdWJqZW1hbGkiLCJhIjoiY20zd3M0c3o3MTRiejJpcjB6NHlvdTF5NyJ9.yALYB_t3BCXigiJ4nsMYRA";
 
+    document.getElementById("localisation").addEventListener("blur", async function () {
+        const localisation = this.value;
+        if (localisation) {
+            const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(localisation)}.json?access_token=${mapboxApiKey}&limit=1`;
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.features.length > 0) {
+                        const coordinates = data.features[0].geometry.coordinates;
+                        document.getElementById("latitude").value = coordinates[1];
+                        document.getElementById("longitude").value = coordinates[0];
+                    }
+                }
+            } catch (error) {
+                console.error("Erreur lors de la récupération des coordonnées :", error);
+            }
+        }
+    });
+</script>
+        
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
             <nav class="pull-left">

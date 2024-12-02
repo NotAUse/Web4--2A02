@@ -133,6 +133,11 @@ if (
                         <span class="sub-item">Retourner</span>
                       </a>
                     </li>
+                    <li>
+                      <a href="../backoffice/experienceList.php">
+                        <span class="sub-item">Experience liste</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </li>

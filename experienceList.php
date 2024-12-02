@@ -1,9 +1,16 @@
 <?php
 include '../../controller/ExperienceController.php';
 
-
 $expC = new ExperienceController();
 $list = $expC->listexperience();
+
+if (isset($_GET['id_exp']) || isset($_GET['titre'])) {
+  $id_exp = $_GET['id_exp'] ?? null;
+  $titre = $_GET['titre'] ?? null;
+  $list = $expC->searchExperience($id_exp, $titre);
+} else {
+  $list = $expC->listexperience();
+}
 
 ?>
 
@@ -98,11 +105,6 @@ $list = $expC->listexperience();
                     <li>
                       <a href="../backoffice/addsite.php">
                         <span class="sub-item">Ajouter site</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../backoffice/addexperience.php">
-                        <span class="sub-item">Ajouter une experience culturel</span>
                       </a>
                     </li>
                     <li>
@@ -521,16 +523,19 @@ $list = $expC->listexperience();
                   <div class="card-header">
                     <div class="d-flex align-items-center">
                       <h4 class="card-title">Ajouter une experience culturelle</h4>
-                       <a href="../backoffice/addexperience.php"
-                        class="btn btn-primary btn-round ms-auto">
-                        <i class="fa fa-plus"></i>
-                        Ajouter Experience
-                      </a>
+                       
 
                     </div>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
+                    <div class="search-bar">
+                      <form method="GET" action="">
+                          <input type="text" name="id_exp" placeholder="Rechercher un ID" value="<?= isset($_GET['id_exp']) ? htmlspecialchars($_GET['id_exp']) : '' ?>">
+                          <input type="text" name="titre" placeholder="Rechercher un titre" value="<?= isset($_GET['titre']) ? htmlspecialchars($_GET['titre']) : '' ?>">
+                          <button type="submit" class="btn btn-primary">Rechercher</button>
+                      </form>
+                    </div>
                       <table
                         id="add-row"
                         class="display table table-striped table-hover"
@@ -538,9 +543,11 @@ $list = $expC->listexperience();
                         <thead>
                           <tr>
                             <th>ID</th>
+                            <th>nom du site</th>
                             <th>titre</th>
                             <th>Description</th>
-                            <th>Date d'ouverture</th>
+                            <th>Date</th>
+                            <th>note</th>
                             <th>ID site</th>
                             <th style="width: 10%" colspan="2">Actions</th>
                           </tr>
@@ -550,36 +557,31 @@ $list = $expC->listexperience();
                         foreach ($list as $experience) {?>
                             <tr>
                                 <td><?= $experience['id_exp']; ?></td>
+                                <td><?= $experience['nom_site']; ?></td>
                                 <td><?= $experience['titre']; ?></td>
                                 <td><?= $experience['descriptionE']; ?></td>
                                 <td><?= $experience['dateE']; ?></td>
+                                <td><?= $experience['noteE']; ?></td>
                                 <td><?= $experience['id_site']; ?></td>
-                                <td align="center">
-                                <form method="POST" action="updateexperience.php">
-                                    <input type="hidden" value="<?php echo $experience['id_exp']; ?>" name="id_exp">
-                                    <button type="submit" name="update" class="btn btn-primary">
-                                        Update
+                                <td>
+                                <form action="deleteexperience.php" method="GET" style="display:inline;">
+                                    <input type="hidden" name="id_exp" value="<?php echo $experience['id_exp']; ?>">
+                                    <button type="submit" class="btn btn-danger">
+                                    Delete
                                     </button>
                                 </form>
-
-                            </td>
-                            <td>
-                            <form action="deleteexperience.php" method="GET" style="display:inline;">
-                                <input type="hidden" name="id_exp" value="<?php echo $experience['id_exp']; ?>">
-                                <button type="submit" class="btn btn-danger">
-                                Delete
-                                </button>
-                            </form>
-                            </td>
+                                </td>
 
                         <?php } ?>
 
                         <tfoot>
                           <tr>
-                          <th>ID</th>
+                            <th>ID</th>
+                            <th>nom du site</th>
                             <th>titre</th>
                             <th>Description</th>
-                            <th>Date d'ouverture</th>
+                            <th>Date</th>
+                            <th>note</th>
                             <th>ID site</th>
                             <th>Action</th>
                           </tr>

@@ -1,8 +1,20 @@
 <?php
-include '../../controller/siteController.php';
+include '../../controller/SiteController.php';
+
 $siteC = new siteController();
 $list = $siteC->listsite();
 $sitesJson = json_encode($list);
+
+if (isset($_GET['id_site']) || isset($_GET['nom']) || isset($_GET['localisation']) || isset($_GET['descriptions'])) {
+  $id_site = $_GET['id_site'] ?? null;
+  $nom = $_GET['nom'] ?? null;
+  $localisation = $_GET['localisation'] ?? null;
+  $descriptions = $_GET['descriptions'] ?? null;
+  $list = $siteC->searchSites($id_site,$nom, $localisation, $descriptions);
+} else {
+  $list = $siteC->listsite();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -103,11 +115,6 @@ $sitesJson = json_encode($list);
                     <li>
                       <a href="../backoffice/addsite.php">
                         <span class="sub-item">Ajouter site</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../backoffice/addexperience.php">
-                        <span class="sub-item">Ajouter une experience culturel</span>
                       </a>
                     </li>
                     <li class="active">
@@ -514,7 +521,7 @@ $sitesJson = json_encode($list);
 
                 <!-- liste des sites-->
          
-                <div class="container">
+        <div class="container">
           <div class="page-inner">
             <div class="page-header">
               <h3 class="fw-bold mb-3">Liste des sites culturels</h3>
@@ -536,10 +543,16 @@ $sitesJson = json_encode($list);
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table
-                        id="add-row"
-                        class="display table table-striped table-hover"
-                      >
+                    <div class="search-bar">
+                      <form method="GET" action="">
+                          <input type="text" name="id_site" placeholder="Rechercher un ID" value="<?= isset($_GET['id_site']) ? htmlspecialchars($_GET['id_site']) : '' ?>">
+                          <input type="text" name="nom" placeholder="Rechercher un Nom" value="<?= isset($_GET['nom']) ? htmlspecialchars($_GET['nom']) : '' ?>">
+                          <input type="text" name="localisation" placeholder="Rechercher une Localisation" value="<?= isset($_GET['localisation']) ? htmlspecialchars($_GET['localisation']) : '' ?>">
+                          <input type="text" name="descriptions" placeholder="Rechercher une Description" value="<?= isset($_GET['descriptions']) ? htmlspecialchars($_GET['descriptions']) : '' ?>">
+                          <button type="submit" class="btn btn-primary">Rechercher</button>
+                      </form>
+                    </div>
+                      <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                           <tr>
                             <th>ID</th>
@@ -591,13 +604,9 @@ $sitesJson = json_encode($list);
                         </tfoot>
                       </table>
                     </div>
-                    <div class="page-header">
-                      <h3 class="fw-bold mb-3">Map des sites culturels</h3>
-                    </div>
-                    
                     <div id="map"></div>
                     <script>
-                        mapboxgl.accessToken = 'pk.eyJ1IjoiYXlvdWJqZW1hbGkiLCJhIjoiY20zcWc5YnV6MG5nODJsc2RndGd5NjJoeiJ9._Ia3gxIkzjG64nFnK0fJsw';
+                        mapboxgl.accessToken = 'pk.eyJ1IjoiYXlvdWJqZW1hbGkiLCJhIjoiY20zd3M0c3o3MTRiejJpcjB6NHlvdTF5NyJ9.yALYB_t3BCXigiJ4nsMYRA';
                         var map = new mapboxgl.Map({
                             container: 'map',
                             style: 'mapbox://styles/mapbox/streets-v11',
@@ -607,11 +616,10 @@ $sitesJson = json_encode($list);
 
                         var sites = <?php echo $sitesJson; ?>;
 
-                      // Ajouter un marqueur pour chaque site
                       sites.forEach(function(site) {
                           new mapboxgl.Marker()
-                              .setLngLat([site.longitude, site.latitude]) // Position du marqueur
-                              .setPopup(new mapboxgl.Popup().setHTML('<h3>' + site.nom + '</h3><p>' + site.descriptions + '</p>')) // Contenu du popup
+                              .setLngLat([site.longitude, site.latitude]) 
+                              .setPopup(new mapboxgl.Popup().setHTML('<h3>' + site.nom + '</h3><p>' + site.descriptions + '</p>'))
                               .addTo(map);
                       });
                     </script>
@@ -867,26 +875,46 @@ $sitesJson = json_encode($list);
     <script src="../backoffice/assets/js/setting-demo2.js"></script>
     <script>
       $(document).ready(function () {
-        // Add Row
-        $("#add-row").DataTable({
+        $("#multi-filter-select").DataTable({
           pageLength: 5,
-        });
+          initComplete: function () {
+            this.api()
+              .columns()
+              .every(function () {
+                var column = this;
+                var select = $(
+                  '<select class="form-select"><option value=""></option></select>'
+                )
+                  .appendTo($(column.footer()).empty())
+                  .on("change", function () {
+                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
 
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+                    column
+                      .search(val ? "^" + val + "$" : "", true, false)
+                      .draw();
+                  });
 
-        $("#addRowButton").click(function () {
-          $("#add-row")
-            .dataTable()
-            .fnAddData([
-              $("#addName").val(),
-              $("#addPosition").val(),
-              $("#addOffice").val(),
-              action,
-            ]);
-          $("#addRowModal").modal("hide");
+                column
+                  .data()
+                  .unique()
+                  .sort()
+                  .each(function (d, j) {
+                    select.append(
+                      '<option value="' + d + '">' + d + "</option>"
+                    );
+                  });
+              });
+          },
         });
       });
+      $(document).ready(function () {
+        $("#search").on("input", function () {
+            let value = $(this).val().toLowerCase();
+            $("#add-row tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
     </script>
   </body>
 </html>
