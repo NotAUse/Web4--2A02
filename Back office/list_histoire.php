@@ -1,4 +1,5 @@
 <?php
+session_start(); 
 // Connexion à la base de données
 $dsn = "mysql:host=localhost;dbname=categorie_db";
 $username = "root";
@@ -7,6 +8,10 @@ $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ];
+
+if (!isset($_SESSION['session_id'])) {
+    $_SESSION['session_id'] = session_id(); // Utilise l'ID de session PHP
+}
 
 try {
     $conn = new PDO($dsn, $username, $password, $options);
@@ -18,188 +23,295 @@ try {
 $stmt = $conn->query("SELECT id, nom FROM categorie");
 $categories = $stmt->fetchAll();
 
-// Récupérer les histoires (optionnellement filtrées par catégorie)
+// Récupérer le numéro de page et la catégorie sélectionnée
 $categorie_id = isset($_POST['categorie']) ? $_POST['categorie'] : '';
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 5;  // Nombre d'histoires par page
+$offset = ($page - 1) * $limit;  // Calcul de l'offset
 
+// Récupérer les histoires (optionnellement filtrées par catégorie)
 if ($categorie_id) {
     $stmt = $conn->prepare("SELECT h.id, h.titre, h.contenu, h.date_creation, c.nom AS categorie 
                             FROM histoires h 
                             JOIN categorie c ON h.categorie_id = c.id 
                             WHERE h.categorie_id = :categorie_id 
-                            ORDER BY h.date_creation DESC");
-    $stmt->execute(['categorie_id' => $categorie_id]);
+                            ORDER BY h.date_creation DESC 
+                            LIMIT :limit OFFSET :offset");
+    $stmt->bindParam(':categorie_id', $categorie_id, PDO::PARAM_INT);
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
 } else {
-    $stmt = $conn->query("SELECT h.id, h.titre, h.contenu, h.date_creation, c.nom AS categorie 
-                          FROM histoires h 
-                          JOIN categorie c ON h.categorie_id = c.id 
-                          ORDER BY h.date_creation DESC");
+    $stmt = $conn->prepare("SELECT h.id, h.titre, h.contenu, h.date_creation, c.nom AS categorie 
+                            FROM histoires h 
+                            JOIN categorie c ON h.categorie_id = c.id 
+                            ORDER BY h.date_creation DESC 
+                            LIMIT :limit OFFSET :offset");
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
 }
 
 $histoires = $stmt->fetchAll();
+
+// Calculer le nombre total d'histoires pour la pagination
+$stmt = $conn->query("SELECT COUNT(*) FROM histoires");
+$total_histoires = $stmt->fetchColumn();
+$total_pages = ceil($total_histoires / $limit);
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Histoires</title>
-    <script>
-        // Fonction pour afficher ou masquer le formulaire d'ajout
-        function afficherFormulaireAjout() {
-            document.getElementById('modalAjout').style.display = 'block';
-        }
-
-        function cacherFormulaireAjout() {
-            document.getElementById('modalAjout').style.display = 'none';
-        }
-
-        // Validation avec JavaScript
-        function validerFormulaire() {
-            var titre = document.getElementById('titre').value;
-            var contenu = document.getElementById('contenu').value;
-            var categorie_id = document.getElementById('categorie_id').value;
-
-            if (titre.length < 4) {
-                alert("Le titre doit contenir au moins 4 caractères.");
-                return false;
-            }
-
-            if (!titre || !contenu || !categorie_id) {
-                alert("Tous les champs doivent être remplis !");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
-        #modalAjout {
-            display: none;
-            background-color: #f9f9f9;
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f4f4f9;
+        }
+        
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
             padding: 20px;
-            border: 1px solid #ccc;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: #ecf0f1;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+
+        /* Main content styles */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .main-content h1 {
+            color: #2c3e50;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            color: #3498db;
+            text-decoration: none;
+            padding: 8px 16px;
+            margin: 0 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .pagination a:hover {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        .pagination .active {
+            background-color: #3498db;
+            color: white;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 5px;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-<header>
-    <h1>Gestion des Histoires</h1>
-</header>
 
-<nav>
-    <form method="POST" action="list_histoire.php">
-        <label for="categorie">Filtrer par catégorie :</label>
-        <select id="categorie" name="categorie">
-            <option value="">Toutes les catégories</option>
-            <?php foreach ($categories as $categorie): ?>
-                <option value="<?= $categorie['id']; ?>"><?= htmlspecialchars($categorie['nom']); ?></option>
-            <?php endforeach; ?>
-        </select>
-        <button type="submit">Rechercher</button>
-    </form>
-</nav>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <a href="#" onclick="afficherFormulaireAjout()">Ajouter une histoire</a>
+        <a href="list_histoire.php">Liste des histoires</a>
+        <a href="list_categorie.php">Liste des catégories</a>
+    </div>
 
-<main>
-    <h2>Liste des Histoires</h2>
-    <table border="1" cellpadding="10" cellspacing="0">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Titre</th>
-            <th>Contenu</th>
-            <th>Catégorie</th>
-            <th>Date de création</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($histoires as $histoire): ?>
-            <tr>
-                <td><?= $histoire['id']; ?></td>
-                <td><?= htmlspecialchars($histoire['titre']); ?></td>
-                <td><?= htmlspecialchars($histoire['contenu']); ?></td>
-                <td><?= htmlspecialchars($histoire['categorie']); ?></td>
-                <td><?= $histoire['date_creation']; ?></td>
-                <td>
-                    <a href="update_histoire.php?id=<?= $histoire['id']; ?>">Modifier</a> |
-                    <a href="delete_histoire.php?id=<?= $histoire['id']; ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette histoire ?');">Supprimer</a>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-        <tr>
-            <td colspan="6">
-                <button type="button" onclick="afficherFormulaireAjout()">Ajouter une Histoire</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <!-- Main content -->
+    <div class="main-content">
+        <h1>Gestion des Histoires</h1>
 
-    <div id="modalAjout">
-        <h3>Ajouter une Histoire</h3>
-        <form id="form_histoire" method="POST" action="add_histoire.php" onsubmit="return validerFormulaire()">
-            <label for="titre">Titre :</label>
-            <input type="text" id="titre" name="titre">
-            <br><br>
-
-            <label for="contenu">Contenu :</label>
-            <textarea id="contenu" name="contenu" rows="5" cols="40"></textarea>
-            <br><br>
-
-            <label for="categorie_id">Catégorie :</label>
-            <select id="categorie_id" name="categorie_id">
+        <!-- Form for filtering by category -->
+        <form method="POST" action="list_histoire.php" class="mb-4">
+            <label for="categorie" class="form-label">Filtrer par catégorie :</label>
+            <select id="categorie" name="categorie" class="form-select">
+                <option value="">Toutes les catégories</option>
                 <?php foreach ($categories as $categorie): ?>
-                    <option value="<?= $categorie['id']; ?>"><?= htmlspecialchars($categorie['nom']); ?></option>
+                    <option value="<?= $categorie['id']; ?>" <?= ($categorie_id == $categorie['id']) ? 'selected' : ''; ?>><?= htmlspecialchars($categorie['nom']); ?></option>
                 <?php endforeach; ?>
             </select>
-            <br><br>
-
-            <button type="submit">Ajouter</button>
-            <button type="button" onclick="cacherFormulaireAjout()">Annuler</button>
+            <button type="submit" class="btn btn-primary mt-2">Rechercher</button>
         </form>
+
+        <h2>Liste des Histoires</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                    <th>Catégorie</th>
+                    <th>Date de création</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($histoires as $histoire): ?>
+                    <tr>
+                        <td><?= $histoire['id']; ?></td>
+                        <td><?= htmlspecialchars($histoire['titre']); ?></td>
+                        <td><?= htmlspecialchars($histoire['contenu']); ?></td>
+                        <td><?= htmlspecialchars($histoire['categorie']); ?></td>
+                        <td><?= $histoire['date_creation']; ?></td>
+                        <td>
+                            <a href="update_histoire.php?id=<?= $histoire['id']; ?>" class="btn btn-secondary btn-sm">Modifier</a>
+                            <a href="delete_histoire.php?id=<?= $histoire['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette histoire ?');">Supprimer</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                <a href="?page=<?= $i; ?>" class="<?= ($page == $i) ? 'active' : ''; ?>"><?= $i; ?></a>
+            <?php endfor; ?>
+        </div>
     </div>
-</main>
 
+    <!-- Modal pour ajouter une histoire -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModal()">&times;</span>
+            <h2>Ajouter une histoire</h2>
+            <form action="add_histoire.php" method="POST">
+                <div class="mb-3">
+                    <label for="titre" class="form-label">Titre</label>
+                    <input type="text" class="form-control" id="titre" name="titre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="contenu" class="form-label">Contenu</label>
+                    <textarea class="form-control" id="contenu" name="contenu" rows="4" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="categorie" class="form-label">Catégorie</label>
+                    <select class="form-select" id="categorie" name="categorie" required>
+                        <option value="">Sélectionnez une catégorie</option>
+                        <?php foreach ($categories as $categorie): ?>
+                            <option value="<?= $categorie['id']; ?>"><?= htmlspecialchars($categorie['nom']); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter l'histoire</button>
+            </form>
+        </div>
+    </div>
 
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
+    <script>
+        // Fonction pour afficher la modal
+        function afficherFormulaireAjout() {
+            document.getElementById('myModal').style.display = "block";
+        }
+
+        // Fonction pour fermer la modal
+        function fermerModal() {
+            document.getElementById('myModal').style.display = "none";
+        }
+
+        // Fermer la modal si l'utilisateur clique en dehors de celle-ci
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('myModal')) {
+                fermerModal();
+            }
+        }
+    </script>
+
 </body>
 </html>
-
-
