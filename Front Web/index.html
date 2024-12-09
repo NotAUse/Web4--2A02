@@ -6,10 +6,7 @@
     <title>Tuniverse - Célébration du Patrimoine Culturel Tunisien</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -25,110 +22,313 @@
                 <i class="fas fa-user-circle user-icon"></i>
                 Mon Compte
             </a>
-            
-
         </nav>
     </header>
 
     <main>
+        <!-- Traditions Section -->
         <section id="traditions">
             <h2>Les Traditions</h2>
             <p>Découvrez la richesse des traditions tunisiennes.</p>
-            <section id="traditions">
-    <h2>Les Traditions Tunisiennes</h2>
-    <p>Découvrez la richesse des traditions tunisiennes, un mélange fascinant de culture arabe, berbère et méditerranéenne.</p>
 
-    <!-- Cuisine Section -->
-    <h3>Cuisine Tunisienne</h3>
-    <p>La cuisine tunisienne est variée et savoureuse. Ne manquez pas des plats comme le couscous, les bricks, et le tajine tunisien. Cliquez sur le plat pour en savoir plus !</p>
-    
-    <div class="food-gallery">
-        <div class="food-item" onclick="openFoodModal('couscousModal')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Tunisian_Couscous_%28Couscous_Tunisien%29.jpg" alt="Couscous">
-            <h4>Couscous</h4>
-        </div>
-        <div class="food-item" onclick="openFoodModal('brikModal')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Brik_tunisien.jpg" alt="Brik">
-            <h4>Brik</h4>
-        </div>
-    </div>
+            <!-- Cuisine Section -->
+            <h3>Cuisine Tunisienne</h3>
+            <p>La cuisine tunisienne est variée et savoureuse. Ne manquez pas des plats comme le couscous, les bricks, et le tajine tunisien. Cliquez sur le plat pour en savoir plus !</p>
+            
+            <div class="food-gallery">
+                <div class="food-item" onclick="openFoodModal('couscousModal')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Tunisian_Couscous_%28Couscous_Tunisien%29.jpg" alt="Couscous">
+                    <h4>Couscous</h4>
+                </div>
+                <div class="food-item" onclick="openFoodModal('brikModal')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Brik_tunisien.jpg" alt="Brik">
+                    <h4>Brik</h4>
+                </div>
+            </div>
 
-    <!-- Festivals Section -->
-    <h3>Les Festivals Tunisiens</h3>
-    <p>Les festivals tunisiens, comme le Festival de Carthage, mettent en avant la musique, le cinéma et les arts traditionnels.</p>
-    
-    <div class="festival-gallery">
-        <div class="festival-item">
-            <img src="https://www.exploringtunisia.com/wp-content/uploads/2021/06/festival-de-carthage.jpg" alt="Festival de Carthage">
-            <h4>Festival de Carthage</h4>
-            <p>Un festival de musique et de cinéma qui attire des artistes internationaux et locaux.</p>
-        </div>
-        <div class="festival-item">
-            <img src="https://www.madeintunisia.net/sites/default/files/styles/16_9_960x540/public/2021-11/festival-djerba.jpg" alt="Festival de Djerba">
-            <h4>Festival de Djerba</h4>
-            <p>Un événement culturel majeur célébrant les arts et la musique traditionnelle.</p>
-        </div>
-    </div>
+            <!-- Festivals Section -->
+            <h3>Les Festivals Tunisiens</h3>
+            <p>Les festivals tunisiens, comme le Festival de Carthage, mettent en avant la musique, le cinéma et les arts traditionnels.</p>
+            
+            <div class="festival-gallery">
+                <div class="festival-item">
+                    <img src="https://www.exploringtunisia.com/wp-content/uploads/2021/06/festival-de-carthage.jpg" alt="Festival de Carthage">
+                    <h4>Festival de Carthage</h4>
+                    <p>Un festival de musique et de cinéma qui attire des artistes internationaux et locaux.</p>
+                </div>
+                <div class="festival-item">
+                    <img src="https://www.madeintunisia.net/sites/default/files/styles/16_9_960x540/public/2021-11/festival-djerba.jpg" alt="Festival de Djerba">
+                    <h4>Festival de Djerba</h4>
+                    <p>Un événement culturel majeur célébrant les arts et la musique traditionnelle.</p>
+                </div>
+            </div>
 
-    <!-- Music and Dance Section -->
-    <h3>Musique et Danse Traditionnelles</h3>
-    <p>La musique "Mezoued" et la danse "Raqs" sont des expressions culturelles vibrantes du patrimoine tunisien. Écoutez un extrait de musique Mezoued ci-dessous.</p>
-    
-    <audio controls>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
-        Votre navigateur ne prend pas en charge la lecture de fichiers audio.
-    </audio>
+            <!-- Music and Dance Section -->
+            <h3>Musique et Danse Traditionnelles</h3>
+            <p>La musique "Mezoued" et la danse "Raqs" sont des expressions culturelles vibrantes du patrimoine tunisien. Écoutez un extrait de musique Mezoued ci-dessous.</p>
+            
+            <audio controls>
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+                Votre navigateur ne prend pas en charge la lecture de fichiers audio.
+            </audio>
 
-    <!-- Arts and Crafts Section -->
-    <h3>Arts et Artisanat</h3>
-    <p>Les tapis, la poterie, et l'art de la broderie témoignent du savoir-faire unique des artisans tunisiens.</p>
+            <!-- Arts and Crafts Section -->
+            <h3>Arts et Artisanat</h3>
+            <p>Les tapis, la poterie, et l'art de la broderie témoignent du savoir-faire unique des artisans tunisiens.</p>
 
-    <div class="craft-gallery">
-        <div class="craft-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Tunisian_handmade_carpet.jpg" alt="Tunisian Carpet">
-            <h4>Tapis Traditionnels</h4>
-        </div>
-        <div class="craft-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Tunisian_Ceramics.jpg" alt="Tunisian Ceramics">
-            <h4>Poterie Tunisienne</h4>
-        </div>
-    </div>
-</section>
-
-<!-- Modal for Food Details -->
-<div id="couscousModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeFoodModal('couscousModal')">&times;</span>
-        <h2>Recette du Couscous Tunisien</h2>
-        <p>Le couscous tunisien est préparé avec de la semoule fine et servi avec de la viande (agneau ou poulet), des légumes et des épices.</p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Tunisian_Couscous_%28Couscous_Tunisien%29.jpg" alt="Couscous">
-        <p><strong>Ingrédients:</strong> Semoule, viande, légumes, épices (ras el hanout), pois chiches.</p>
-    </div>
-</div>
-
-<!-- Modal for Brik Details -->
-<div id="brikModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeFoodModal('brikModal')">&times;</span>
-        <h2>Recette du Brik Tunisien</h2>
-        <p>Le Brik est un plat composé de pâte fine farcie souvent avec un œuf, puis frit. C'est un incontournable lors des repas.</p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Brik_tunisien.jpg" alt="Brik">
-        <p><strong>Ingrédients:</strong> Pâte filo, œuf, thon, câpres.</p>
-    </div>
-</div>
-
+            <div class="craft-gallery">
+                <div class="craft-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Tunisian_handmade_carpet.jpg" alt="Tunisian Carpet">
+                    <h4>Tapis Traditionnels</h4>
+                </div>
+                <div class="craft-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Tunisian_Ceramics.jpg" alt="Tunisian Ceramics">
+                    <h4>Poterie Tunisienne</h4>
+                </div>
+            </div>
         </section>
+        <title>Boite à Histoires</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+            .stories-container {
+                background: #fff;
+                border: 2px solid #ddd;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px auto;
+                width: 90%;
+                max-width: 1200px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            #main-title {
+                font-size: 20px;
+                color: #007bff;
+                text-decoration: underline;
+                margin-bottom: 20px;
+                text-align: left;
+            }
+            #recits {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .recit-item {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                width: 300px;
+                overflow: hidden;
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+            .recit-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            }
+            .recit-image img {
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+            }
+            .recit-content {
+                padding: 15px;
+            }
+            .recit-title {
+                font-size: 18px;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+            }
+            .hot {
+                color: red;
+                font-size: 14px;
+                margin-left: 10px;
+            }
+            .favorite-btn {
+                background: none;
+                border: none;
+                font-size: 24px;
+                color: #f1eeeb;
+                cursor: pointer;
+                margin-left: 10px;
+                padding: 0;
+                outline: none;
+                user-select: none;
+            }
+            .favorite-btn.active {
+                color: #ffd700;
+            }
+            .recit-description {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 15px;
+            }
+            .recit-link {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #ff6600;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+            .recit-link:hover {
+                background-color: #ff9933;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="stories-container">
+            <h1 id="main-title">Boîte à Histoires</h1>
+            <input type="text" id="searchInput" onkeyup="filterStories()" placeholder="Rechercher une histoire...">
+            <section id="recits"></section>
+        </div>
+    
+        <script>
+            const recits = [
+                {
+                    nom: "عز نفسك تصيبها",
+                    description: "Un proverbe ancien sur l'importance de la dignité.",
+                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzyLwYKIj0fVXbgTfTs_zvy39k4pCETEFHMg&s",
+                    lien: "azz_nesfak.html",
+                    vues: 5
+                },
+                {
+                    nom: "Mieux vaut prévenir que guérir",
+                    description: "Un proverbe populaire sur la prévention des problèmes.",
+                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9eZ-fEB4vh2gXeOfPgFGfCVV_NWdkSt4kh2iPpUvSXboFc8kYxDfQsuUogsYupmragWE&usqp=CAU",
+                    lien: "mieux_prevenir.html",
+                    vues: 15
+                },
+                {
+                    nom: "7 sbeya",
+                    description: "Un proverbe tunisien sur la prudence.",
+                    image: "https://civilisable.com/wp-content/uploads/2024/03/Traditional-Tunisian-Clothing-in-Coastal-Regions-4.3.2024.jpg",
+                    lien: "7_sbeya.html",
+                    vues: 8
+                },
+                {
+                    nom: "Sabat Laarousa",
+                    description: "L'histoire d'une rue légendaire à Tunis.",
+                    image: "data:image/jpeg;base64,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",
+                    lien: "sabat_laarousa.html",
+                    vues: 12
+                },
+                {
+                    nom: "Mythe de Tanit",
+                    description: "Un mythe ancien concernant la déesse Tanit.",
+                    image: "data:image/jpeg;base64,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",
+                    lien: "mythe_tanit.html",
+                    vues: 4
+                },
+                {
+                    nom: "louiza",
+                    description: "L'histoire d'une fille au prénom assez significatif.",
+                    image: "https://civilisable.com/wp-content/uploads/2024/03/Traditional-Tunisian-Malia-4.3.2024.jpg",
+                    lien: "louiza.html",
+                    vues: 18
+                }
+            ];
+    
+            // Fonction pour afficher les récits
+            function displayRecits() {
+                const recitsContainer = document.getElementById("recits");
+    
+                recits.forEach(recit => {
+                    const recitDiv = document.createElement("div");
+                    recitDiv.classList.add("recit-item");
+    
+                    const hotText = recit.vues > 10 ? '<span class="hot">HOT</span>' : ''; // Ajouter "HOT" si vues > 10
+    
+                    recitDiv.innerHTML = `
+                        <div class="recit-image">
+                            <img src="${recit.image || 'placeholder.jpg'}" alt="${recit.nom}">
+                        </div>
+                        <div class="recit-content">
+                            <div class="recit-title">
+                                ${recit.nom} ${hotText}
+                                <button class="favorite-btn" onclick="toggleFavorite(this, '${recit.nom}')">&#9733;</button>
+                            </div>
+                            <div class="recit-description">${recit.description}</div>
+                            <a class="recit-link" href="${recit.lien}" onclick="incrementViews(event, '${recit.nom}')">Lire la suite</a>
+                            <p>Vues: <span id="views-${recit.nom}">${getViewCount(recit.nom)}</span></p>
+                        </div>
+                    `;
+    
+                    recitsContainer.appendChild(recitDiv);
+                });
+    
+                // Ajouter le bouton "Créer une nouvelle histoire"
+                const createButtonDiv = document.createElement("div");
+                createButtonDiv.classList.add("create-button-container");
+    
+                const createButton = document.createElement("button");
+                createButton.textContent = "Créer une nouvelle histoire";
+                createButton.classList.add("create-btn");
+                createButton.onclick = goToCreatePage;
+                createButtonDiv.appendChild(createButton);
+    
+                recitsContainer.appendChild(createButtonDiv);
+            }
+    
+            // Fonction pour rediriger vers la page de création d'histoire
+            function goToCreatePage() {
+                window.location.href = "create_story.html";
+            }
+    
+            // Fonction pour incrémenter les vues lors de la visite d'une page d'histoire
+            function incrementViews(event, recitNom) {
+                event.preventDefault(); // Empêche la redirection par défaut de l'élément <a>
+    
+                // Incrémente les vues dans le localStorage
+                let currentViews = getViewCount(recitNom);
+                currentViews += 1;
+                localStorage.setItem(`views_${recitNom}`, currentViews);
+    
+                // Rediriger vers la page d'histoire
+                window.location.href = recits.find(r => r.nom === recitNom).lien;
+            }
+    
+            // Fonction pour obtenir le nombre de vues, en utilisant localStorage si disponible
+            function getViewCount(recitNom) {
+                const storedViews = localStorage.getItem(`views_${recitNom}`);
+                return storedViews ? parseInt(storedViews, 10) : recits.find(r => r.nom === recitNom).vues;
+            }
+    
+            // Fonction pour ajouter un récit aux favoris
+            function toggleFavorite(button, recitNom) {
+                button.classList.toggle("active");
+                const formData = new FormData();
+                formData.append("titre", recitNom);
+                fetch("add_to_favoris.php", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        console.log(data.message); 
+                    } else {
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur :", error);
+                });
+            }
 
-        <section id="recits">
-            <h2>Récits Culturels</h2>
-            <p>Explorez les récits qui forment notre identité collective.</p>
-        </section>
-
-        <section id="savoir-faire">
-            <h2>Savoir-Faire</h2>
-            <p>Connectez-vous avec les savoir-faire tunisiens.</p>
-        </section>
-
+    
+            // Appeler la fonction pour afficher les récits
+            displayRecits();
+        </script>
+        <!-- Meilleures Places Section -->
         <section id="meilleures-places">
             <h2>Les Meilleures Places à Visiter en Tunisie</h2>
             <!-- Barre de recherche -->
@@ -162,76 +362,23 @@
                 </div>
                 <div class="place" onclick="openModal ('bizerteModal')">
                     <h3>6. Bizerte</h3>
-                    <img src="https://cdn.generationvoyage.fr/2019/06/bizerte.jpg" alt="Bizerte" />
-                    <p>Cette ville côtière est célèbre pour son port et ses monuments historiques.</p>
+                    <img src="https://cdn.generationvoyage.fr/2019/06/bizerte-tunisie.jpg" alt="Bizerte" />
+                    <p>La ville méditerranéenne de Bizerte est un lieu de rencontre entre culture traditionnelle et modernité.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Modals -->
-    <div id="douggaModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('douggaModal')">&times;</span>
-            <h2>Dougga</h2>
-            <p>Site archéologique classé au patrimoine mondial de l'UNESCO, Dougga est un incontournable pour les amateurs d'histoire.</p>
-            <img src="https://cdn.generationvoyage.fr/2019/06/dougga-tunisie.jpg" alt="Dougga" />
-            <img src="https://static1.evcdn.net/images/reduction/229177_w-1600_h-1200_q-70_m-crop.jpg" alt="Dougga" />
-        </div>
+    <footer>
+        <p>© 2024 Tuniverse. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Modal for detailed place info -->
+    <div id="placeModal" class="modal">
+        <span class="close" onclick="closeModal()">×</span>
+        <div id="modalContent"></div>
     </div>
 
-    <div id="djerbaModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('djerbaModal')">&times;</span>
-            <h2>Djerba</h2>
-            <p>Connue pour ses plages de sable blanc et ses maisons typiques, Djerba est une destination de rêve.</p>
-            <img src="https://cdn.generationvoyage.fr/2019/06/djerba-tunisie.jpg" alt="Djerba" />
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZGttdFKxSdm0IsLwdMTd9v4IBM6llgJt0wg&s" alt="Djerba" />
-        </div>
-    </div>
-
-    <div id="carthageModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('carthageModal')">&times;</span>
-            <h2>Carthage</h2>
-            <p>Ancienne cité commerciale, Carthage est riche en histoire et en monuments à découvrir.</p>
-            <img src="https://cdn.generationvoyage.fr/2019/06/carthage-tunisie.jpg" alt="Carthage" />
-            <img src="https://cdn.generationvoyage.fr/2019/06/carthage-tunisie-2.jpg" alt="Carthage" />
-        </div>
-    </div>
-
-    <div id="sidiModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('sidiModal')">&times;</span>
-            <h2>Sidi Bou Saïd</h2>
-            <p>Ce charmant village est célèbre pour ses maisons blanches et bleues et ses vues imprenables sur la mer.</p>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIwavvwJsQK1fKzAHTP4kqPiGK1x9q9wJnug&sg" alt="Sidi Bou Saïd" />
-            <img src="https://cdn.generationvoyage.fr/2019/06/sidi-bou-said-2.jpg" alt="Sidi Bou Saïd" />
-        </div>
-    </div>
-
-    <div id="kairouanModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('kairouanModal')">&times;</span>
-            <h2>Kairouan</h2>
-            <p>Kairouan est une ville sainte de l'Islam, connue pour sa grande mosquée et son riche patrimoine culturel.</p>
-            <img src="https://cdn.generationvoyage.fr/2019/06/kairouan.jpg" alt="Kairouan" />
-            <img src="https://cdn.generationvoyage.fr/2019/06/kairouan-2.jpg" alt="Kairouan" />
-        </div>
-    </div>
-
-    <div id="bizerteModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('bizerteModal')">&times;</span>
-            <h2>Bizerte</h2>
-            <p>Cette ville côtière est célèbre pour son port et ses monuments historiques.</p>
-            <img src="https://cdn.generationvoyage.fr /2019/06/bizerte.jpg" alt="Bizerte" />
-            <img src="https://cdn.generationvoyage.fr/2019/06/bizerte-2.jpg" alt="Bizerte" />
-        </div>
-    </div>
-    
-    <button onclick="scrollToTop()" id="backToTop" title="Back to Top">↑</button>
     <script src="script.js"></script>
-    
 </body>
 </html>
