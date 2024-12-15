@@ -1,0 +1,64 @@
+<?php
+// Connexion à la base de données
+require_once('../../config.php');
+
+// Vérifier si un ID est passé en paramètre
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    header('Location: list_histoire.php'); // Rediriger si l'ID est manquant
+    exit();
+}
+
+$id = $_GET['id'];
+
+// Récupérer l'histoire avant de supprimer pour afficher les informations de confirmation
+try {
+    $query = $pdo->prepare("SELECT * FROM histoires WHERE id = ?");
+    $query->execute([$id]);
+    $histoire = $query->fetch();
+
+    // Si aucune histoire n'est trouvée, rediriger vers la liste
+    if (!$histoire) {
+        header('Location: list_histoire.php');
+        exit();
+    }
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération de l'histoire : " . $e->getMessage();
+    exit();
+}
+
+// Vérifier si le formulaire de confirmation est soumis
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    try {
+        // Supprimer l'histoire de la base de données
+        $query = $pdo->prepare("DELETE FROM histoires WHERE id = ?");
+        $query->execute([$id]);
+
+        // Redirection vers la page de liste des histoires après la suppression
+        header('Location: list_histoire.php');
+        exit();
+    } catch (PDOException $e) {
+        echo "Erreur lors de la suppression : " . $e->getMessage();
+        exit();
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supprimer l'Histoire</title>
+</head>
+<body>
+    <h1>Êtes-vous sûr de vouloir supprimer cette histoire ?</h1>
+    <p><strong>Titre :</strong> <?php echo htmlspecialchars($histoire['titre']); ?></p>
+    <p><strong>Contenu :</strong> <?php echo nl2br(htmlspecialchars($histoire['contenu'])); ?></p>
+    
+    <!-- Formulaire de confirmation -->
+    <form action="delete_histoire.php?id=<?php echo $id; ?>" method="POST">
+        <button type="submit" name="confirm_delete">Oui, supprimer</button>
+        <a href="list_histoire.php">Non, retourner à la liste</a>
+    </form>
+</body>
+</html>

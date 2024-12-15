@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Histoires</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Full page layout with a fixed sidebar */
+        body {
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background-color: #343a40;
+            padding-top: 20px;
+            color: white;
+            overflow-y: auto;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+
+        .sidebar .nav-item {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .caret {
+            margin-left: 10px;
+        }
+
+        /* Main content styles */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Table and Button Customizations */
+        .table th, .table td {
+            text-align: center;
+        }
+        .btn-custom {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="#" data-bs-toggle="collapse" data-bs-target="#boite_histoires">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>boite_histoires</p>
+                    <span class="caret"></span>
+                </a>
+                <div class="collapse" id="boite_histoires">
+                    <ul class="nav nav-collapse">
+                        <li>
+                            <a href="histoire.html">
+                                <span class="sub-item">Histoire List</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2>Gestion des Histoires</h2>
+        <div class="row">
+            <!-- Add story button -->
+            <div class="col-md-12 text-end">
+                <a href="ajouter_histoire.html" class="btn btn-primary btn-custom">Ajouter une Histoire</a>
+            </div>
+        </div>
+
+        <!-- Stories Table -->
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                    <th>Catégorie</th>
+                    <th>Date de création</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Histoire 1</td>
+                    <td>Contenu de l'histoire 1</td>
+                    <td>Catégorie 1</td>
+                    <td>2024-11-30</td>
+                    <td>
+                        <a href="modifier_histoire.html" class="btn btn-warning btn-sm">Modifier</a> |
+                        <button class="btn btn-danger btn-sm">Supprimer</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Histoire 2</td>
+                    <td>Contenu de l'histoire 2</td>
+                    <td>Catégorie 2</td>
+                    <td>2024-11-29</td>
+                    <td>
+                        <a href="modifier_histoire.html" class="btn btn-warning btn-sm">Modifier</a> |
+                        <button class="btn btn-danger btn-sm">Supprimer</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS Bundle (includes Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
