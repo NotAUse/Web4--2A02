@@ -1,0 +1,14 @@
+.pagination {
+    margin-top: 20px; /* Add spacing above */
+}
+
+#content {
+    margin-bottom: 20px; /* Add spacing below the content */
+}
+.footer {
+    position: relative; /* Ensures it doesn't overlap content */
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 10px 0;
+}
