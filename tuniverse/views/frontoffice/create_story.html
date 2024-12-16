@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer une Histoire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        .input-container {
+            margin: 20px auto;
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #storyContainer {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Créer une Histoire</h1>
+    <div class="input-container">
+        <input type="text" id="storyTitle" placeholder="Entrez un titre pour l'histoire...">
+        <button onclick="generateStory()">Générer l'histoire</button>
+    </div>
+    <div id="storyContainer" style="display: none;">
+        <h2>Votre histoire générée :</h2>
+        <p id="generatedStory"></p>
+    </div>
+
+    <script>
+        async function generateStory() {
+            const title = document.getElementById("storyTitle").value.trim();
+            const storyContainer = document.getElementById("storyContainer");
+            const generatedStory = document.getElementById("generatedStory");
+
+            if (!title) {
+                alert("Veuillez entrer un titre pour générer une histoire.");
+                return;
+            }
+
+            // Replace with your actual OpenAI API key
+            const apiKey = "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";  // Place your OpenAI API key here
+            const endpoint = "https://api.openai.com/v1/completions"; // OpenAI API endpoint
+
+            const data = {
+                model: "gpt-3.5-turbo", // Updated to the correct model
+                messages: [
+                    {
+                        role: "user",
+                        content: `Génère une histoire avec le titre : ${title}`,
+                    },
+                ],
+                max_tokens: 500,  // Limit for the story's length
+            };
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${apiKey}`,  // Adding the Bearer token for authentication
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const responseData = await response.json();
+                console.log("API Response:", responseData); // Log the entire response
+
+                // Check if the structure is different
+                if (responseData.choices && responseData.choices.length > 0) {
+                    generatedStory.textContent = responseData.choices[0].text.trim();
+                } else if (responseData.error) {
+                    generatedStory.textContent = `Erreur: ${responseData.error.message}`;
+                } else {
+                    generatedStory.textContent = "Aucune histoire générée.";
+                }
+
+                storyContainer.style.display = "block";
+            } catch (error) {
+                generatedStory.textContent = "Erreur lors de la génération de l'histoire.";
+                console.error("Erreur API:", error);
+                storyContainer.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
